@@ -8,6 +8,8 @@ module Rails3JQueryAutocomplete
         "See http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html for more information.", caller)
       end
 
+      tag_element = options.delete(:tag_element) || :div
+
       options[:required] = method_required?(method) unless options.key?(:required)
       options[:as]     ||= "autocompleted_string"
 
@@ -30,7 +32,7 @@ module Rails3JQueryAutocomplete
         send(:"inline_#{type}_for", method, options)
       end.compact.join("\n")
 
-      return template.content_tag(:li, Formtastic::Util.html_safe(list_item_content), wrapper_html)
+      return template.content_tag(tag_element, Formtastic::Util.html_safe(list_item_content), wrapper_html)
     end
 
     alias_method :autocompleted_input, :autocomplete_input
